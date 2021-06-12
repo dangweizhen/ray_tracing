@@ -6,8 +6,9 @@
 
 Color BACKGROUND(255,255,255);
 int MAXP = 512;
-int DEFAULT_ANTI = 100;
-int MAX_DEPTH = 10;
+int DEFAULT_ANTI = 10;
+int MAX_DEPTH = 5;
+/*
 World::World(int x, int y)
 {
 	X = x;
@@ -22,16 +23,18 @@ World::World(int x, int y)
 	pnum = 0;
 	antialiasing = DEFAULT_ANTI;
 }
+*/
 
-World::World(int x, int y, Vec3d p)
+World::World(int x, int y, int l, Vec3d p):cam(x, y, l, p)
 {
 	X = x;
 	Y = y;
-	camera = p;
-	canvas = new Color*[Y];
-	for(int i = 0;i < Y;i ++)
+	L = l;
+	//camera = p;
+	canvas = new Color*[y];
+	for(int i = 0;i < y;i ++)
 	{
-		canvas[i] = new Color[X];
+		canvas[i] = new Color[x];
 	}
 	plist = new Primitive*[MAXP];
 	pnum = 0;
@@ -68,9 +71,12 @@ void World::render()
 			Color res(0,0,0);
 			for(int k = 0; k < antialiasing;k ++)
 			{
+				/*
 				double delta_x = (rand() - RAND_MAX / 2.0) / double(RAND_MAX);
 				double delta_y = (rand() - RAND_MAX / 2.0) / double(RAND_MAX);
 				Ray r(camera, Vec3d(i-Y/2.0+delta_y, X/2.0-j+delta_x, 0) - camera);
+				*/
+				Ray r = cam.get_ray(i, j);
 				res = res + ray_tracing(r);
 			}
 			canvas[i][j] = res * (1.0/antialiasing);

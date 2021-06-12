@@ -4,6 +4,7 @@
 #include "world.h"
 #include "material.h"
 #include "primitives.h"
+#include "camera.h"
 #include <fstream>
 #include <cstdlib>
 
@@ -12,11 +13,11 @@ using namespace std;
 
 int X = 960;
 int Y = 720;
-
+int L = 500;
 int main()
 {
 	srand(0);
-	World w(X, Y, Vec3d(0,0,-1000));
+	World w(X, Y, L+500, Vec3d(0,0,-L));
 	//
 	Sphere* s1 = new Sphere(Vec3d(0,0,0), 100);
 	//s1->setColor(Color(255,191,0));
