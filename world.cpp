@@ -6,8 +6,8 @@
 
 Color BACKGROUND(255,255,255);
 int MAXP = 512;
-int DEFAULT_ANTI = 25;
-int MAX_DEPTH = 3;
+int DEFAULT_ANTI = 250;
+int MAX_DEPTH = 5;
 /*
 World::World(int x, int y)
 {
