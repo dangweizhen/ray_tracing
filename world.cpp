@@ -6,8 +6,8 @@
 
 Color BACKGROUND(255,255,255);
 int MAXP = 512;
-int DEFAULT_ANTI = 10;
-int MAX_DEPTH = 5;
+int DEFAULT_ANTI = 25;
+int MAX_DEPTH = 3;
 /*
 World::World(int x, int y)
 {
@@ -25,7 +25,7 @@ World::World(int x, int y)
 }
 */
 
-World::World(int x, int y, int l, Vec3d p):cam(x, y, l, p)
+World::World(int x, int y, double l, Vec3d p, Vec3d d, int len_d):cam(x, y, l, p, d, len_d)
 {
 	X = x;
 	Y = y;
@@ -64,6 +64,10 @@ bool World::insert(Primitive* p)
 
 void World::render()
 {
+	std::cout << "rendering..." << std::endl;
+	int total_p = X * Y;
+	int percent_p = total_p / 100;
+	int cur = 0;
 	if(plist == NULL) return;
 	for(int i = 0;i < Y;i ++)
 		for(int j = 0;j < X;j ++)
@@ -76,11 +80,15 @@ void World::render()
 				double delta_y = (rand() - RAND_MAX / 2.0) / double(RAND_MAX);
 				Ray r(camera, Vec3d(i-Y/2.0+delta_y, X/2.0-j+delta_x, 0) - camera);
 				*/
-				Ray r = cam.get_ray(i, j);
+				Ray r = cam.get_ray(j, i);
 				res = res + ray_tracing(r);
 			}
 			canvas[i][j] = res * (1.0/antialiasing);
 			canvas[i][j].check();
+			if((i * X + j) % percent_p == 0)
+			{
+				std::cout << "rendering " << (i * X + j) / percent_p << " percent..." << std::endl;
+			}
 		}
 }
 

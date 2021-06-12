@@ -9,7 +9,7 @@ class World
 public:
 	//World():X(0),Y(0){}
 	//World(int x, int y, int l);
-	World(int x, int y, int l, Vec3d v);
+	World(int x, int y, double l, Vec3d v, Vec3d d, int lens_d);
 	~World();
 	void render();
 	Color color(int x, int y){return canvas[x][y];}
@@ -17,7 +17,7 @@ public:
 private:
 	int X;
 	int Y;
-	int L;
+	double L;
 	//Vec3d camera;
 	Color** canvas;
 	Primitive** plist;
