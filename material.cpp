@@ -4,6 +4,13 @@
 #include <iostream>
 //using namespace std;
 
+Color Material::absorb(Color dif_c, Vec3d collide_point)
+{
+	if(texture != NULL)
+		return texture->get_color(collide_point) * dif_c * (1.0/256);
+	return Color(0,0,0);
+}
+
 Ray Diffuse::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
 {
 	Vec3d center = collide_point + normal;
@@ -12,11 +19,6 @@ Ray Diffuse::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
 	Vec3d select_p = center + dir;
 	return Ray(collide_point, select_p - collide_point);
 	
-}
-
-Color Diffuse::absorb(Color dif_c)
-{
-	return orgin_color * dif_c * (1.0/256);
 }
 
 Ray Reflect::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
@@ -38,11 +40,6 @@ Ray Reflect::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
 	return Ray(collide_point, select_p - collide_point);
 	*/
 	
-}
-
-Color Reflect::absorb(Color dif_c)
-{
-	return orgin_color * dif_c * (1.0/256);
 }
 
 Ray Refract::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
@@ -83,8 +80,4 @@ Ray Refract::process_ray(Ray r, Vec3d collide_point, Vec3d normal)
 	
 }
 
-Color Refract::absorb(Color dif_c)
-{
-	return orgin_color * dif_c * (1.0/256);
-}
 

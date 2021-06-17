@@ -3,50 +3,58 @@
 
 #include "ray.h"
 #include "basic.h"
+#include "texture.h"
 
 class Material
 {
 public:
+	Material():texture(NULL){}
+	Material(Texture* t):texture(t){}
 	virtual Ray process_ray(Ray, Vec3d, Vec3d) = 0;
-	virtual Color absorb(Color) = 0;
+	Color absorb(Color, Vec3d);
 	bool can_through() {return through;}
+	bool is_light() {return light;}
 	void set_through(bool b){through = b;}
+	void set_light(bool b){light = b;}
+	Texture* get_texture(){return texture;}
 private:
+	Texture* texture;
 	bool through;
+	bool light;
 };
 
 class Diffuse: public Material
 {
 public:
-	Diffuse(Color c):orgin_color(c){set_through(false);}
+	Diffuse(Texture* t):Material(t){set_through(false);set_light(false);}
 	virtual Ray process_ray(Ray, Vec3d, Vec3d);
-	virtual Color absorb(Color);
+	//virtual Color absorb(Color);
 private:
-	Color orgin_color;
+	//Color orgin_color;
 };
 
 class Reflect: public Material
 {
 public:
-	Reflect(Color c, double d = -1):orgin_color(c), diffuse(d){set_through(false);}
+	Reflect(Texture* t, double d = -1):Material(t), diffuse(d){set_through(false);set_light(false);}
 	virtual Ray process_ray(Ray, Vec3d, Vec3d);
-	virtual Color absorb(Color);
+	//virtual Color absorb(Color);
 private:
 	double diffuse;
-	Color orgin_color;
+	//Color orgin_color;
 };
 
 
 class Refract: public Material
 {
 public:
-	Refract(Color c, double i = 1, double p = 1):orgin_color(c), ind(i), pos(p){set_through(true);}
+	Refract(Texture* t, double i = 1, double p = 1):Material(t), ind(i), pos(p){set_through(true);set_light(false);}
 	virtual Ray process_ray(Ray, Vec3d, Vec3d);
-	virtual Color absorb(Color);
+	//virtual Color absorb(Color);
 private:
 	double ind; //refractive indices
 	double pos; //possibility of refraction
-	Color orgin_color;
+	//Color orgin_color;
 };
 
 #endif

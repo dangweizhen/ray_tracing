@@ -6,7 +6,7 @@
 
 Color BACKGROUND(255,255,255);
 int MAXP = 512;
-int DEFAULT_ANTI = 250;
+int DEFAULT_ANTI = 500;
 int MAX_DEPTH = 5;
 /*
 World::World(int x, int y)
@@ -113,19 +113,7 @@ Color World::ray_tracing(Ray r, int depth)
 		Ray next_ray = plist[collide_num]->nextRay(r, collide_point);
 		if(!next_ray.is_ray()) return Color(0,0,0);
 		Color in_Color = ray_tracing(next_ray, depth + 1);
-		return plist[collide_num]->absorb(in_Color);
-		/*
-		Color c = plist[collide_num]->getColor();
-		//diffuse
-		Vec3d normal = plist[collide_num]->getNorm(collide_point);
-		Vec3d center = collide_point + normal;
-		Vec3d dir(double(rand()) / RAND_MAX - 0.5, double(rand()) / RAND_MAX - 0.5, double(rand()) / RAND_MAX - 0.5);
-		dir.norm();
-		Vec3d select_p = center + dir;
-		Color dif_c = ray_tracing(Ray(collide_point, select_p - collide_point), depth + 1);
-		return c * dif_c * (1.0/256);
-		*/
-		//
+		return plist[collide_num]->absorb(in_Color, collide_point);
 	}
 	return BACKGROUND;
 }
