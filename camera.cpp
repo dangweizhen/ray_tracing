@@ -12,11 +12,11 @@ Ray Camera::get_ray(int i, int j)
 	if(abs(dir.x()) <= EPS)
 		x_d = Vec3d(1, 0, 0);
 	else
-		x_d = Vec3d(dir.z() / dir.x(), 0, 1);
+		x_d = Vec3d(-dir.z() / dir.x(), 0, 1);
 	if(abs(dir.y()) <= EPS)
 		y_d = Vec3d(0, 1, 0);
 	else
-		y_d = Vec3d(0, dir.z() / dir.y(), 1);
+		y_d = Vec3d(0, -dir.z() / dir.y(), 1);
 	x_d.norm();
 	y_d.norm();
 	double delta_x = (rand() - RAND_MAX / 2.0) / double(RAND_MAX);

@@ -19,7 +19,7 @@ double F = 20;
 int main()
 {
 	srand(0);
-	World w(X, Y, L, Vec3d(0, -0, L), Vec3d(0,0,-L), F);
+	World w(X, Y, L, Vec3d(200, -200, L), Vec3d(-200,200,-L), F);
 	//
 	Sphere* s1 = new Sphere(Vec3d(0,0,0), 80);
 	//s1->setColor(Color(255,191,0));
