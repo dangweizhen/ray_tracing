@@ -1,7 +1,7 @@
 #ifndef TEXTURE
 #define TEXTURE
 #include "basic.h"
-
+#include "perlin.h"
 
 class Texture
 {
@@ -26,6 +26,17 @@ public:
 private:
 	Texture* t1;
 	Texture* t2;
+};
+
+class Perlin_Texture: public Texture
+{
+public:
+	Perlin_Texture():scale(25.0){}
+	Perlin_Texture(double s):scale(s){}
+	virtual Color get_color(Vec3d p);
+private:
+	Perlin perlin;
+	double scale;
 };
 
 #endif

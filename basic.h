@@ -6,6 +6,8 @@
 using namespace std;
 
 const double EPS = 0.000001;
+const double MAX_VALUE = 9999999999;
+const double MIN_VALUE = -9999999999;
 
 class Vec3d
 {

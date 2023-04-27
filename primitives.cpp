@@ -34,3 +34,4 @@ Ray Sphere::nextRay(Ray r, Vec3d collide_point)
 	Vec3d normal = getNorm(collide_point);
 	return m->process_ray(r, collide_point, normal);
 }
+
